@@ -1,21 +1,25 @@
 <template>
   <main v-if="!loading">
     <DataTitle :text="title" :dataDate="dataDate" />
+    <DataBoxes :stats="stats" />
   </main>
 </template>
 
 <script>
 import DataTitle from '@/components/DataTitle'
+import DataBoxes from '@/components/DataBoxes'
+
 export default {
   name: 'HomeView',
   components: {
-    DataTitle
+    DataTitle,
+    DataBoxes,
   },
   data() {
     return {
       loading: true,
       title: 'Global',
-      dataDate: '2022-06-06T00:52:54.553Z',
+      dataDate: '',
       status: {},
       countries: []
     }
@@ -27,12 +31,12 @@ export default {
       return data;
     }
   },
-  created() {
-    const data = this.fetchCovidData();
+  async created() {
+    const data = await this.fetchCovidData();
     console.log(data);
     this.dataDate = data.Date;
-    console.log(data.Date);
     this.stats = data.Global;
+    console.log(stats.NewConfirmed);
     this.countries = data.Countries;
     this.loading = false;
   }
